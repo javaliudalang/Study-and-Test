@@ -41,15 +41,15 @@ public class ShootGame extends JPanel {
 			airplane = ImageIO.read(ShootGame.class.getResource("plane_5.gif"));
 			bee = ImageIO.read(ShootGame.class.getResource("plane_6.gif"));
 			bullet = ImageIO.read(ShootGame.class.getResource("ball.png"));
-			hero0 = ImageIO.read(ShootGame.class.getResource("3.png"));
-			hero1 = ImageIO.read(ShootGame.class.getResource("4.png"));
-			hero2 = ImageIO.read(ShootGame.class.getResource("5.png"));
-			hero3 = ImageIO.read(ShootGame.class.getResource("6.png"));
-			hero4 = ImageIO.read(ShootGame.class.getResource("7.png"));
-			hero5 = ImageIO.read(ShootGame.class.getResource("8.png"));
-			pause = ImageIO.read(ShootGame.class.getResource("pause.png"));
+			hero0 = ImageIO.read(ShootGame.class.getResource("0.png"));
+			hero1 = ImageIO.read(ShootGame.class.getResource("1.png"));
+			hero2 = ImageIO.read(ShootGame.class.getResource("2.png"));
+			hero3 = ImageIO.read(ShootGame.class.getResource("3.png"));
+			hero4 = ImageIO.read(ShootGame.class.getResource("4.png"));
+			hero5 = ImageIO.read(ShootGame.class.getResource("5.png"));
+			pause = ImageIO.read(ShootGame.class.getResource("pause.jpg"));
 			gameover = ImageIO.read(ShootGame.class.getResource("die.jpg"));
-			start = ImageIO.read(ShootGame.class.getResource("interface_1.png"));
+			start = ImageIO.read(ShootGame.class.getResource("start.jpg"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -322,7 +322,7 @@ public class ShootGame extends JPanel {
 		
 		
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Fly");
+		JFrame frame = new JFrame("蔡徐坤来打飞鸡啊");
 		ShootGame game = new ShootGame();
 		frame.add(game); 
 		frame.setSize(WIDTH, HEIGHT); 

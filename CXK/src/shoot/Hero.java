@@ -16,15 +16,21 @@ public class Hero extends FlyingObject{
 		y = 400;
 		doubleFire = 0;
 		life = 3;
-		images = new BufferedImage[]{ShootGame.hero0,ShootGame.hero1,ShootGame.hero2,ShootGame.hero3,
-			ShootGame.hero4,ShootGame.hero5};
+		images = new BufferedImage[]{
+			ShootGame.hero0,
+			ShootGame.hero1,
+			ShootGame.hero2,
+			ShootGame.hero3,
+			ShootGame.hero4,
+			ShootGame.hero5
+		};
 		index = 0;
 	}
 	@Override
 	public void step() {
 		
 		
-		image = images[index++/10%images.length];
+		image = images[index++/15%images.length];
 		
 	}
 	public Bullet[] shoot(){
