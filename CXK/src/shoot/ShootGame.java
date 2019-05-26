@@ -325,7 +325,7 @@ public class ShootGame extends JPanel {
 		JFrame frame = new JFrame("蔡徐坤来打飞鸡啊");
 		ShootGame game = new ShootGame();
 		frame.add(game); 
-		frame.setSize(WIDTH, HEIGHT); 
+		frame.setSize(WIDTH, HEIGHT);
 		frame.setAlwaysOnTop(true); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
