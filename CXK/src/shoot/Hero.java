@@ -89,4 +89,3 @@ public boolean hit(FlyingObject other){
 	return x>=x1&& x<=x2 && y>=y1 && y<=y2;
 }
 }
-
