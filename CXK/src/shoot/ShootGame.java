@@ -35,11 +35,11 @@ public class ShootGame extends JPanel {
 	public static BufferedImage hero5;
 
 	static {
-		try { 
+		try {
 			background = ImageIO.read(ShootGame.class.getResource("background.jpg"));
 			bigPlane = ImageIO.read(ShootGame.class.getResource("bigplane.png"));
-			airplane = ImageIO.read(ShootGame.class.getResource("plane_5.gif"));
-			bee = ImageIO.read(ShootGame.class.getResource("plane_6.gif"));
+			airplane = ImageIO.read(ShootGame.class.getResource("ji.png"));
+			bee = ImageIO.read(ShootGame.class.getResource("lsh.png"));
 			bullet = ImageIO.read(ShootGame.class.getResource("ball.png"));
 			hero0 = ImageIO.read(ShootGame.class.getResource("0.png"));
 			hero1 = ImageIO.read(ShootGame.class.getResource("1.png"));
@@ -59,10 +59,10 @@ public class ShootGame extends JPanel {
 	private Hero hero = new Hero();
 	private FlyingObject[] flyings = {};
 	private Bullet[] bullets = {};
-	
+
 	public static final int START = 0;
 	public static final int RUNNING = 1;
-	public static final int PAUSE= 2;
+	public static final int PAUSE = 2;
 	public static final int GAME_OVER = 3;
 	private int state = START;
 
@@ -85,189 +85,194 @@ public class ShootGame extends JPanel {
 		if (flyIndex % 40 == 0) {
 			FlyingObject obj = nextOne();
 			flyings = Arrays.copyOf(flyings, flyings.length + 1);
-			flyings[flyings.length-1]=obj;
+			flyings[flyings.length - 1] = obj;
 
 		}
 	}
-	public void bangAction(){
-		for(int i=0;i<bullets.length;i++){
-			Bullet b=bullets[i];
+
+	public void bangAction() {
+		for (int i = 0; i < bullets.length; i++) {
+			Bullet b = bullets[i];
 			bang(b);
 		}
 	}
+
 	int score = 0;
-	public void bang(Bullet b){
+
+	public void bang(Bullet b) {
 		int index = -1;
-		for(int i=0;i<flyings.length;i++){
+		for (int i = 0; i < flyings.length; i++) {
 			FlyingObject f = flyings[i];
-			if(f.shootBy(b)){
+			if (f.shootBy(b)) {
 				index = i;
 				break;
 			}
 		}
-		if(index!=-1){
+		if (index != -1) {
 			FlyingObject one = flyings[index];
-			if(one instanceof Enemy){
-				Enemy e = (Enemy)one;
-				score +=e.getScore();
-				
-			}if(one instanceof Award){
-				Award a = (Award)one;
+			if (one instanceof Enemy) {
+				Enemy e = (Enemy) one;
+				score += e.getScore();
+
+			}
+			if (one instanceof Award) {
+				Award a = (Award) one;
 				int type = a.getType();
-				switch(type){
+				switch (type) {
 				case Award.DOUBLE_FIRE:
-				hero.addDoubleFire();
-				break;
+					hero.addDoubleFire();
+					break;
 				case Award.LIFE:
 					hero.addLife();
-					
+
 					break;
-					
+
 				}
-				
+
 			}
-			FlyingObject t =flyings[index];
-			flyings[index] = flyings[flyings.length-1];
-			flyings[flyings.length-1]=t;
-			flyings =Arrays.copyOf(flyings,flyings.length-1);
-			
+			FlyingObject t = flyings[index];
+			flyings[index] = flyings[flyings.length - 1];
+			flyings[flyings.length - 1] = t;
+			flyings = Arrays.copyOf(flyings, flyings.length - 1);
+
 		}
 	}
-	
-	public void stepAction(){
+
+	public void stepAction() {
 		hero.step();
-		for(int i=0;i<flyings.length;i++){
+		for (int i = 0; i < flyings.length; i++) {
 			flyings[i].step();
 		}
-		for(int i=0;i<bullets.length;i++){
+		for (int i = 0; i < bullets.length; i++) {
 			bullets[i].step();
 		}
 	}
+
 	int shootIndex = 0;
-	
-	
+
 	public void shootAction() {
 		shootIndex++;
 		if (shootIndex % 30 == 0) {
 			Bullet[] bs = hero.shoot();
-			
+
 			bullets = Arrays.copyOf(bullets, bullets.length + bs.length);
-			System.arraycopy(bs,0,bullets,bullets.length-bs.length,bs.length);
+			System.arraycopy(bs, 0, bullets, bullets.length - bs.length, bs.length);
 		}
-		
+
 	}
+
 	private void outOfBoundsAction() {
 		int index = 0;
 		FlyingObject[] flyingLives = new FlyingObject[flyings.length];
-		for(int i=0;i<flyings.length;i++){
+		for (int i = 0; i < flyings.length; i++) {
 			FlyingObject f = flyings[i];
-			if(!f.outOfBounds()){
+			if (!f.outOfBounds()) {
 				flyingLives[index] = f;
 				index++;
-				
+
 			}
 		}
 		flyings = Arrays.copyOf(flyingLives, index);
-		
+
 		index = 0;
 		Bullet[] bulletsLives = new Bullet[bullets.length];
-		for(int i=0;i<bullets.length;i++){
+		for (int i = 0; i < bullets.length; i++) {
 			Bullet b = bullets[i];
-			if(!b.outOfBounds()){
+			if (!b.outOfBounds()) {
 				bulletsLives[index] = b;
 				index++;
-	}
+			}
 		}
 		bullets = Arrays.copyOf(bulletsLives, index);
 	}
-	
+
 	public void hitAction() {
-		for(int i=0;i<flyings.length;i++){
+		for (int i = 0; i < flyings.length; i++) {
 			FlyingObject f = flyings[i];
-			if(hero.hit(f)){
+			if (hero.hit(f)) {
 				hero.subtractLife();
 				hero.clearDoubleFire();
 				FlyingObject t = flyings[i];
-				flyings[i] = flyings[flyings.length-1];
-				flyings[flyings.length-1]=t;
-				flyings = Arrays.copyOf(flyings,flyings.length-1);
+				flyings[i] = flyings[flyings.length - 1];
+				flyings[flyings.length - 1] = t;
+				flyings = Arrays.copyOf(flyings, flyings.length - 1);
 			}
 		}
-		
+
 	}
-	
+
 	public void checkGameOverAction() {
-		if(hero.getLife()<=0){
+		if (hero.getLife() <= 0) {
 			state = GAME_OVER;
-			
-			
+
 		}
-		
+
 	}
-	
+
 	public void action() {
-		MouseAdapter l = new MouseAdapter(){
-			public void mouseMoved(MouseEvent e){
-				if(state==RUNNING){
-					int x =	e.getX();
+		MouseAdapter l = new MouseAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				if (state == RUNNING) {
+					int x = e.getX();
 					int y = e.getY();
 					hero.moveTo(x, y);
 				}
-			
+
 			}
-			public void mouseClicked(MouseEvent e){
-				switch(state){
+
+			public void mouseClicked(MouseEvent e) {
+				switch (state) {
 				case START:
-					state=RUNNING;
+					state = RUNNING;
 					break;
 				case GAME_OVER:
 					score = 0;
 					hero = new Hero();
 					flyings = new FlyingObject[0];
 					bullets = new Bullet[0];
-					state=START;
+					state = START;
 					break;
-				
+
 				}
 			}
-			public void mouseExited(MouseEvent e){
-				if(state==RUNNING){
-					state=PAUSE;
+
+			public void mouseExited(MouseEvent e) {
+				if (state == RUNNING) {
+					state = PAUSE;
 				}
-				
+
 			}
-			public void mouseEntered(MouseEvent e){
-				if(state==PAUSE){
-					state=RUNNING;
+
+			public void mouseEntered(MouseEvent e) {
+				if (state == PAUSE) {
+					state = RUNNING;
 				}
-				
+
 			}
-			
+
 		};
-		
-		
+
 		this.addMouseListener(l);
 		this.addMouseMotionListener(l);
 		Timer timer = new Timer();
 		int interval = 10;
 		timer.schedule(new TimerTask() {
 			public void run() {
-				if(state==RUNNING){
+				if (state == RUNNING) {
 					enterAction();
 					stepAction();
 					shootAction();
-		            outOfBoundsAction();
-		            bangAction();
-		            hitAction();
-		            checkGameOverAction();
-					
-				}			
+					outOfBoundsAction();
+					bangAction();
+					hitAction();
+					checkGameOverAction();
+
+				}
 				repaint();
 			}
 		}, interval, interval);
 	}
 
-	
 	public void paint(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 		paintHero(g);
@@ -275,7 +280,6 @@ public class ShootGame extends JPanel {
 		paintBullets(g);
 		paintScoreAndLife(g);
 		paintState(g);
-		
 
 	}
 
@@ -297,39 +301,37 @@ public class ShootGame extends JPanel {
 		}
 
 	}
-	
-	
+
 	public void paintScoreAndLife(Graphics g) {
 		g.setColor(new Color(0xFFFF11));
-		g.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
-		g.drawString("score:"+score,10,25);
-		g.drawString("LIFE:"+hero.getLife(),10,60);
+		g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+		g.drawString("score:" + score, 10, 25);
+		g.drawString("LIFE:" + hero.getLife(), 10, 60);
 	}
+
 	public void paintState(Graphics g) {
-		switch(state){
+		switch (state) {
 		case START:
-		g.drawImage(start,0,0,null);
-	    break;
+			g.drawImage(start, 0, 0, null);
+			break;
 		case PAUSE:
-			g.drawImage(pause,0,0,null);
-		    break;
+			g.drawImage(pause, 0, 0, null);
+			break;
 		case GAME_OVER:
-			g.drawImage(gameover,0,0,null);
-		    break;
+			g.drawImage(gameover, 0, 0, null);
+			break;
 		}
 	}
-		
-		
-		
+
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("²ÌÐìÀ¤À´´ò·É¼¦°¡");
 		ShootGame game = new ShootGame();
-		frame.add(game); 
+		frame.add(game);
 		frame.setSize(WIDTH, HEIGHT);
-		frame.setAlwaysOnTop(true); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		frame.setAlwaysOnTop(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		frame.setLocationRelativeTo(null); 
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		game.action();
 

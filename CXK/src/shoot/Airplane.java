@@ -1,24 +1,28 @@
 package shoot;
+
 import java.util.Random;
 
-public class Airplane extends FlyingObject implements Enemy{
+public class Airplane extends FlyingObject implements Enemy {
 	private int speed = 2;
-	public Airplane(){
+
+	public Airplane() {
 		image = ShootGame.airplane;
 		width = image.getWidth();
 		height = image.getHeight();
 		Random rand = new Random();
-		x=rand.nextInt(ShootGame.WIDTH-this.width);
-		y=-this.height;
+		x = rand.nextInt(ShootGame.WIDTH - this.width);
+		y = -this.height;
 	}
-	public int getScore(){
+
+	public int getScore() {
 		return 5;
 	}
 
-	public void step(){
-		y+=speed;
+	public void step() {
+		y += speed;
 	}
-public boolean outOfBounds(){
-	return this.y>=ShootGame.HEIGHT;
-}
+
+	public boolean outOfBounds() {
+		return this.y >= ShootGame.HEIGHT;
+	}
 }
