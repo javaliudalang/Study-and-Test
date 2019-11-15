@@ -324,7 +324,7 @@ public class ShootGame extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("²ÌÐìÀ¤À´´ò·É¼¦°¡");
+		JFrame frame = new JFrame("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½");
 		ShootGame game = new ShootGame();
 		frame.add(game);
 		frame.setSize(WIDTH, HEIGHT);
